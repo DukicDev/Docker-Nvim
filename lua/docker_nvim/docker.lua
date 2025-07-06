@@ -35,6 +35,21 @@ function M.run(tag)
   terminal.run_command(cmd)
 end
 
+function M.logs(name)
+  local project_root = project.get_project_root()
+  if not project_root then
+    print("No Dockerfile found in project root.")
+    return
+  end
+
+  if not name or name == "" then
+    name = vim.fn.fnamemodify(project_root, ":t") .. "_container"
+  end
+
+  local cmd = "docker logs -f " .. name
+  terminal.run_command(cmd)
+end
+
 function M.stop(tag)
   local project_root = project.get_project_root()
   if not project_root then
