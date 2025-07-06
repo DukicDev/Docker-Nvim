@@ -33,7 +33,6 @@ function M.run(tag)
   local cmd = "docker run --name " ..
       vim.fn.fnamemodify(project_root, ":t") .. "_container" .. " " .. "-p " .. ports .. ":" .. ports .. " --rm " .. tag
   terminal.run_command(cmd)
-  status.set_running(true)
 end
 
 function M.stop(tag)
@@ -49,7 +48,6 @@ function M.stop(tag)
 
   local cmd = "docker stop " .. vim.fn.fnamemodify(project_root, ":t") .. "_container"
   terminal.run_command(cmd)
-  status.set_running(false)
 end
 
 return M
