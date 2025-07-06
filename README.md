@@ -81,9 +81,9 @@ end, { desc = "Docker Logs" })
 
 ## Planned Features
 
-[ ] Custom commands
-[ ] Telescope Picker for running containers
-[ ] Starting a shell inside a container
+- [ ] Custom commands
+- [ ] Telescope Picker for running containers
+- [ ] Starting a shell inside a container
 
 ---
 
