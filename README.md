@@ -56,6 +56,11 @@ end, { desc = "Docker Stop" })
 vim.keymap.set("n", "<leader>dl", function()
   docker.logs()
 end, { desc = "Docker Logs" })
+
+vim.keymap.set("n", "<leader>di", function()
+  docker.shell()
+end, { desc = "Docker Shell" })
+
 ```
 
 ---
@@ -83,7 +88,7 @@ end, { desc = "Docker Logs" })
 
 - [ ] Custom commands
 - [ ] Telescope Picker for running containers
-- [ ] Starting a shell inside a container
+- [x] Starting a shell inside a container
 
 ---
 
