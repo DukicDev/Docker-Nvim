@@ -10,7 +10,7 @@ local state = {
   }
 }
 
-function M.open_terminal()
+function M.open_terminal(set_input_mode)
   if term_win and vim.api.nvim_win_is_valid(term_win) then
     vim.api.nvim_set_current_win(term_win)
     return
@@ -28,10 +28,13 @@ function M.open_terminal()
   })
 
   vim.fn.termopen("zsh")
+  if set_input_mode then
+    vim.cmd("startinsert")
+  end
 end
 
-function M.run_command(cmd)
-  M.open_terminal()
+function M.run_command(cmd, set_input_mode)
+  M.open_terminal(set_input_mode)
   vim.fn.chansend(vim.b.terminal_job_id, cmd .. "\n")
 end
 
