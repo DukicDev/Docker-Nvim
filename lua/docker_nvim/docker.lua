@@ -69,8 +69,18 @@ function M.stop(tag)
     tag = vim.fn.fnamemodify(project_root, ":t") .. "_image"
   end
 
-  local cmd = "docker stop " .. vim.fn.fnamemodify(project_root, ":t") .. "_container"
+  local cmd = "docker stop " .. create_container_name(project_root)
   terminal.run_command(cmd)
+end
+
+function M.shell()
+  local project_root = project.get_project_root()
+  if not project_root then
+    print("No Dockerfile found in project root.")
+    return
+  end
+  local cmd = "docker exec -it " .. create_container_name(project_root) .. " /bin/sh"
+  terminal.run_command(cmd, true)
 end
 
 return M
