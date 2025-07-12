@@ -3,6 +3,14 @@ local terminal = require('docker_nvim.terminal')
 local project = require('docker_nvim.project')
 local status = require("docker_nvim.status")
 
+local function create_container_name(project_root)
+  return vim.fn.fnamemodify(project_root, ":t") .. "_container"
+end
+
+local function create_image_name(project_root)
+  return vim.fn.fnamemodify(project_root, ":t") .. "_image"
+end
+
 function M.build_image(tag)
   local project_root = project.get_project_root()
   if not project_root then
@@ -11,7 +19,7 @@ function M.build_image(tag)
   end
 
   if not tag or tag == "" then
-    tag = vim.fn.fnamemodify(project_root, ":t") .. "_image"
+    create_image_name(project_root)
   end
 
   local cmd = "docker build -t " .. tag .. " " .. project_root
@@ -26,12 +34,12 @@ function M.run(tag)
   end
 
   if not tag or tag == "" then
-    tag = vim.fn.fnamemodify(project_root, ":t") .. "_image"
+    create_image_name(project_root)
   end
 
   local ports = vim.fn.input("Ports to map? xxxx:xxxx ")
   local cmd = "docker run --name " ..
-      vim.fn.fnamemodify(project_root, ":t") .. "_container" .. " " .. "-p " .. ports .. ":" .. ports .. " --rm " .. tag
+      create_container_name(project_root) .. " " .. "-p " .. ports .. ":" .. ports .. " --rm " .. tag
   terminal.run_command(cmd)
 end
 
@@ -43,7 +51,7 @@ function M.logs(name)
   end
 
   if not name or name == "" then
-    name = vim.fn.fnamemodify(project_root, ":t") .. "_container"
+    name = create_container_name(project_root)
   end
 
   local cmd = "docker logs -f " .. name
