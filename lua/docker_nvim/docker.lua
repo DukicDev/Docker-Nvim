@@ -31,7 +31,6 @@ local save_config_to_file = function()
 end
 
 local load_config_from_file = function()
-  print(config_file)
   local file = io.open(config_file, "r")
   if file then
     local content = file:read("*a")
@@ -72,6 +71,8 @@ function M.run(tag, rebuild)
   if not tag or tag == "" then
     tag = create_image_name(project_root)
   end
+
+  M.stop(tag)
 
   if not config or not config.port then
     config.port = vim.fn.input("Ports to map? xxxx:xxxx ")
